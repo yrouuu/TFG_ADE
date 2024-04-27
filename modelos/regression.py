@@ -140,8 +140,6 @@ def plot_auc(model, X_train, X_test, y_train, y_test):
     plt.title('Receiver operating characteristic (ROC) Curve for Test Set', fontweight = 'bold', fontsize = 20)
     plt.legend(loc='lower right')
     
-    plt.savefig('pics/Regression_pics/roc_curve.png')
-    
     plt.tight_layout()
 
     
