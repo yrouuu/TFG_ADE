@@ -4,40 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
 from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score, roc_curve, roc_auc_score
     
-    
-def metrics(y_train, y_pred_train, y_test, y_pred_test):
-    np.random.seed(0)
-    traning_scores = []
-    testing_scores = []
-    
-    ### Metrics for the traning set ###
-    traning_scores.append(accuracy_score(y_train, y_pred_train))
-    traning_scores.append(precision_score(y_train, y_pred_train))
-    traning_scores.append(recall_score(y_train, y_pred_train))
-    traning_scores.append(f1_score(y_train, y_pred_train))
-    print('Training Metrics:')
-    print(f'Training Accuracy: ', traning_scores[0]) 
-    print(f'Training Precision: ',traning_scores[1])
-    print(f'Training Recall: ',traning_scores[2])
-    print(f'Training F1-Score: ',traning_scores[3])
-    print('\n')
-    
-    ### Metrics for the testing set ###
-    testing_scores.append(accuracy_score(y_test, y_pred_test))
-    testing_scores.append(precision_score(y_test, y_pred_test))
-    testing_scores.append(recall_score(y_test, y_pred_test))
-    testing_scores.append(f1_score(y_test, y_pred_test))
-    print('Testing Metrics:')
-    print(f'Testing Accuracy: ', testing_scores[0]) 
-    print(f'Testing Precision: ',testing_scores[1])
-    print(f'Testing Recall: ',testing_scores[2])
-    print(f'Testing F1-Score: ',testing_scores[3])
-    print('\n')
-    
-    return traning_scores, testing_scores
     
 def print_metric_plots(X,y):
     np.random.seed(0)
@@ -45,13 +14,13 @@ def print_metric_plots(X,y):
     test_sizes = np.arange(0.1, 1, 0.1) # Test sizes from 10% to 90%
 
     # Lists to store results
-    train_precision = []
+    #train_precision = []
     test_precision = []
-    train_recall = []
+    #train_recall = []
     test_recall = []
-    train_accuracy = []
+    #train_accuracy = []
     test_accuracy = []
-    train_f1 = []
+    #train_f1 = []
     test_f1 = []
 
     # Iterate over different train/test sizes
@@ -63,7 +32,7 @@ def print_metric_plots(X,y):
         X_test_rescaled = sc.transform(X_test)
         
         # Train model
-        model = LogisticRegression(penalty='l2', C=0.001, random_state=42,solver='lbfgs')
+        model = XGBClassifier(learning_rate=0.1,max_depth=12,subsample=0.75,random_state=42)
         model.fit(X_train_rescaled, y_train)
         
         # Predictions
@@ -71,16 +40,17 @@ def print_metric_plots(X,y):
         test_preds = model.predict(X_test_rescaled)
         
         # Calculate scores and append results to lists
-        train_accuracy.append(accuracy_score(y_train, train_preds))
+        #train_accuracy.append(accuracy_score(y_train, train_preds))
         test_accuracy.append(accuracy_score(y_test, test_preds))
-        train_precision.append(precision_score(y_train, train_preds))
+        #train_precision.append(precision_score(y_train, train_preds))
         test_precision.append(precision_score(y_test, test_preds))
-        train_recall.append(recall_score(y_train, train_preds))
+        #train_recall.append(recall_score(y_train, train_preds))
         test_recall.append(recall_score(y_test, test_preds))
-        train_f1.append(f1_score(y_train, train_preds))
+        #train_f1.append(f1_score(y_train, train_preds))
         test_f1.append(f1_score(y_test, test_preds))
     
-    plt.plot(test_sizes, train_accuracy, label='Train Accuracy',color='#ffb482')
+   #sns.set_theme(style="darkgrid")
+    #plt.plot(test_sizes, train_accuracy, label='Train Accuracy',color='#ffb482')
     plt.plot(test_sizes, test_accuracy, label='Test Accuracy',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Accuracy Score')
@@ -88,7 +58,7 @@ def print_metric_plots(X,y):
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_precision, label='Train Precision', color='#ffb482')
+    #plt.plot(test_sizes, train_precision, label='Train Precision', color='#ffb482')
     plt.plot(test_sizes, test_precision, label='Test Precision', color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Precision Score')
@@ -96,7 +66,7 @@ def print_metric_plots(X,y):
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_recall, label='Train Recall',color='#ffb482')
+    #plt.plot(test_sizes, train_recall, label='Train Recall',color='#ffb482')
     plt.plot(test_sizes, test_recall, label='Test Recall',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Recall Score')
@@ -104,7 +74,7 @@ def print_metric_plots(X,y):
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_f1, label='Train F1-Score',color='#ffb482')
+    #plt.plot(test_sizes, train_f1, label='Train F1-Score',color='#ffb482')
     plt.plot(test_sizes, test_f1, label='Test F1-Score',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('F1-Score')
@@ -121,17 +91,17 @@ def roc(X,y):
     X_test_rescaled = sc.transform(X_test)
     
     # Train model
-    model = LogisticRegression(penalty='l2', C=0.001, random_state=42,solver='lbfgs')
+    model = XGBClassifier(learning_rate=0.1,max_depth=12,subsample=0.75,random_state=42)
     model.fit(X_train_rescaled, y_train)
     
-    train_proba_preds = model.predict_proba(X_train_rescaled)[:, 1]
+    #train_proba_preds = model.predict_proba(X_train_rescaled)[:, 1]
     test_proba_preds = model.predict_proba(X_test_rescaled)[:, 1]
     
-    fpr, tpr, thresholds = roc_curve(y_train, train_proba_preds)
-    auc_train = roc_auc_score(y_train, train_proba_preds)
+    #fpr, tpr, thresholds = roc_curve(y_train, train_proba_preds)
+    #auc_train = roc_auc_score(y_train, train_proba_preds)
     
     # Plot ROC curve
-    plt.figure(figsize=(8, 6))
+    """plt.figure(figsize=(8, 6))
     plt.plot(fpr, tpr, color='#ff9f9b', label='ROC Curve (AUC = {:.2f})'.format(auc_train))
     plt.plot([0, 1], [0, 1], 'k--',color='#aaa')
     plt.xlim([0.0, 1.0])
@@ -141,7 +111,7 @@ def roc(X,y):
     plt.title('Receiver Operating Characteristic (ROC) Curve for Training Set',fontweight = 'bold')
     plt.legend(loc='lower right')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
     
     fpr, tpr, thresholds = roc_curve(y_test, test_proba_preds)
     auc_test = roc_auc_score(y_test, test_proba_preds)
