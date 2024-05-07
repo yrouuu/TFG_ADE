@@ -54,7 +54,7 @@ def print_metric_plots(X,y):
     plt.plot(test_sizes, test_accuracy, label='Test Accuracy',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Accuracy Score')
-    plt.title('Effect of Train/Test Size on model Accuracy',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Accuracy',fontweight = 'bold')
     plt.legend()
     plt.show()
     
@@ -62,7 +62,7 @@ def print_metric_plots(X,y):
     plt.plot(test_sizes, test_precision, label='Test Precision', color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Precision Score')
-    plt.title('Effect of Train/Test Size on model Precision',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Precision',fontweight = 'bold')
     plt.legend()
     plt.show()
     
@@ -70,7 +70,7 @@ def print_metric_plots(X,y):
     plt.plot(test_sizes, test_recall, label='Test Recall',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Recall Score')
-    plt.title('Effect of Train/Test Size on model Recall',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Recall',fontweight = 'bold')
     plt.legend()
     plt.show()
     
@@ -78,7 +78,7 @@ def print_metric_plots(X,y):
     plt.plot(test_sizes, test_f1, label='Test F1-Score',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('F1-Score')
-    plt.title('Effect of Train/Test Size on model F1-Score',fontweight = 'bold')
+    plt.title('Effect of Test Size on model F1-Score',fontweight = 'bold')
     plt.legend()
     plt.show()
 

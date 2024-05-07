@@ -67,48 +67,48 @@ def print_metric_plots(X,y):
         model.fit(X_train_rescaled, y_train)
         
         # Predictions
-        train_preds = model.predict(X_train_rescaled)
+        #train_preds = model.predict(X_train_rescaled)
         test_preds = model.predict(X_test_rescaled)
         
         # Calculate scores and append results to lists
-        train_accuracy.append(accuracy_score(y_train, train_preds))
+        #train_accuracy.append(accuracy_score(y_train, train_preds))
         test_accuracy.append(accuracy_score(y_test, test_preds))
-        train_precision.append(precision_score(y_train, train_preds))
+        #train_precision.append(precision_score(y_train, train_preds))
         test_precision.append(precision_score(y_test, test_preds))
-        train_recall.append(recall_score(y_train, train_preds))
+        #train_recall.append(recall_score(y_train, train_preds))
         test_recall.append(recall_score(y_test, test_preds))
-        train_f1.append(f1_score(y_train, train_preds))
+        #train_f1.append(f1_score(y_train, train_preds))
         test_f1.append(f1_score(y_test, test_preds))
     
-    plt.plot(test_sizes, train_accuracy, label='Train Accuracy',color='#ffb482')
+    #plt.plot(test_sizes, train_accuracy, label='Train Accuracy',color='#ffb482')
     plt.plot(test_sizes, test_accuracy, label='Test Accuracy',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Accuracy Score')
-    plt.title('Effect of Train/Test Size on model Accuracy',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Accuracy',fontweight = 'bold')
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_precision, label='Train Precision', color='#ffb482')
+    #plt.plot(test_sizes, train_precision, label='Train Precision', color='#ffb482')
     plt.plot(test_sizes, test_precision, label='Test Precision', color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Precision Score')
-    plt.title('Effect of Train/Test Size on model Precision',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Precision',fontweight = 'bold')
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_recall, label='Train Recall',color='#ffb482')
+    #plt.plot(test_sizes, train_recall, label='Train Recall',color='#ffb482')
     plt.plot(test_sizes, test_recall, label='Test Recall',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('Recall Score')
-    plt.title('Effect of Train/Test Size on model Recall',fontweight = 'bold')
+    plt.title('Effect of Test Size on model Recall',fontweight = 'bold')
     plt.legend()
     plt.show()
     
-    plt.plot(test_sizes, train_f1, label='Train F1-Score',color='#ffb482')
+    #plt.plot(test_sizes, train_f1, label='Train F1-Score',color='#ffb482')
     plt.plot(test_sizes, test_f1, label='Test F1-Score',color='#a1c9f4')
     plt.xlabel('Model Test Size (%)')
     plt.ylabel('F1-Score')
-    plt.title('Effect of Train/Test Size on model F1-Score',fontweight = 'bold')
+    plt.title('Effect of Test Size on model F1-Score',fontweight = 'bold')
     plt.legend()
     plt.show()
 
@@ -124,13 +124,14 @@ def roc(X,y):
     model = LogisticRegression(penalty='l2', C=0.001, random_state=42,solver='lbfgs')
     model.fit(X_train_rescaled, y_train)
     
-    train_proba_preds = model.predict_proba(X_train_rescaled)[:, 1]
+    #train_proba_preds = model.predict_proba(X_train_rescaled)[:, 1]
     test_proba_preds = model.predict_proba(X_test_rescaled)[:, 1]
     
-    fpr, tpr, thresholds = roc_curve(y_train, train_proba_preds)
-    auc_train = roc_auc_score(y_train, train_proba_preds)
+    #fpr, tpr, thresholds = roc_curve(y_train, train_proba_preds)
+    #auc_train = roc_auc_score(y_train, train_proba_preds)
     
     # Plot ROC curve
+    """
     plt.figure(figsize=(8, 6))
     plt.plot(fpr, tpr, color='#ff9f9b', label='ROC Curve (AUC = {:.2f})'.format(auc_train))
     plt.plot([0, 1], [0, 1], 'k--',color='#aaa')
@@ -141,7 +142,7 @@ def roc(X,y):
     plt.title('Receiver Operating Characteristic (ROC) Curve for Training Set',fontweight = 'bold')
     plt.legend(loc='lower right')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
     
     fpr, tpr, thresholds = roc_curve(y_test, test_proba_preds)
     auc_test = roc_auc_score(y_test, test_proba_preds)
